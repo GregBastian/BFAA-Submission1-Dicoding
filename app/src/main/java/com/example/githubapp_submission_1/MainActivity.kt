@@ -10,7 +10,6 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 class MainActivity : AppCompatActivity() {
     private lateinit var rvUsers: RecyclerView
     private var listMain: ArrayList<GithubUser> = arrayListOf()
-    private var title = "Github Social"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,27 +61,14 @@ class MainActivity : AppCompatActivity() {
 
             githubUserList.add(githubUser)
         }
+        avatarsData.recycle()
         return githubUserList
     }
 
     private fun showSelectedUserDetail(selectedUser: GithubUser){
-        // Ada error yang sebelumnya objek tidak dapat muncul saat dipanggil ke intent
-        // coba cek getDataFromStringResource, kemungkinan atribut belum dinisialisasi
-//        Toast.makeText(this, "Kamu memilih " + currentUser.location, Toast.LENGTH_SHORT).show()
-
-        val objectIntent = GithubUser(
-            username = selectedUser.username,
-            name = selectedUser.name,
-            longLocation  = selectedUser.longLocation,
-            repository = selectedUser.repository,
-            company = selectedUser.company,
-            followers = selectedUser.followers,
-            following = selectedUser.following,
-            avatar = selectedUser.avatar
-        )
 
         val moveWithObjectIntent = Intent(this@MainActivity, GithubUserDetail::class.java)
-        moveWithObjectIntent.putExtra(GithubUserDetail.EXTRA_USER, objectIntent)
+        moveWithObjectIntent.putExtra(GithubUserDetail.EXTRA_USER, selectedUser)
         startActivity(moveWithObjectIntent)
     }
 
